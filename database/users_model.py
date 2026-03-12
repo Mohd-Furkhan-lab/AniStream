@@ -8,7 +8,7 @@ class User(Base):
     id=Column(Integer,primary_key=True,autoincrement=True)
     name=Column(String,nullable=False)
     email=Column(String,nullable=False,unique=True)
-    password=Column(Integer,nullable=False)
+    password=Column(String,nullable=False)
     role=Column(String,nullable=False)
 
 def add_user(name,email,password,role):
