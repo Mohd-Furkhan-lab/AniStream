@@ -6,17 +6,17 @@ admin=APIRouter(prefix="/admin",tags=["admin"])
 def admin_login():
     return {"Message":"Admin Login"}
 
-@admin.get('/anime')
-def get_all_anime():
-    return {"Message":"All Anime"}
-
-@admin.get('/anime/{genre}')
-def filter_anime_by_genre(genre:str):
-    return {"Message":f"{genre} Anime"}
-
 @admin.post('/anime')
 def add_anime():
     return {"Message":"Add Anime"}
+
+@admin.post('/anime/{animeid}/{ep}')
+def add_anime_ep(animeid:int,ep:int):
+    return {"Message":f"Added ep no {ep} to {animeid}"}
+
+@admin.put('/anime/{animeid}')
+def update_anime_info(animeid:int):
+    return {"Message":f"Updated Details of anime {animeid}"}
 
 @admin.delete('/anime/{id}')
 def delete_anime(id:int):
