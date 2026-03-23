@@ -1,4 +1,4 @@
-#!/home/furkhan/Desktop/anime_streaming_wesbite_backend/.venv/bin/python3
+#!/home/furkhan/Desktop/Anime_Streamin_Backend_System/.venv/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys

@@ -1,13 +1,14 @@
 from fastapi import APIRouter
+from schemas.user_schemas import Login_schema,Signup_schema
 
 users=APIRouter(prefix="/user",tags=["users"])
 
 @users.post('/login')
-def login():
+def login(data:Login_schema):
     return {"Message":"User Login"}
 
 @users.post('/signup')
-def signup():
+def signup(data:Signup_schema):
     return {"Message":"User Signup"}
 
 @users.post('/saveanime/{id:int}')
