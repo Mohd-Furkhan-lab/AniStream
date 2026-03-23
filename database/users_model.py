@@ -1,11 +1,11 @@
 from sqlalchemy import Column,String,Integer,DateTime
 from database.db import Base,SessionLocal
-
+import uuid
 
 #User Info Table
 class User(Base):
     __tablename__= "users"
-    userid=Column(Integer,primary_key=True,autoincrement=True)
+    userid=Column(String,primary_key=True,default=lambda:str(uuid.uuid4()))
     name=Column(String,nullable=False)
     email=Column(String,nullable=False,unique=True)
     password=Column(String,nullable=False)
@@ -15,14 +15,29 @@ class User(Base):
 #User Saved Anime Table
 class Savedanime(Base):
     __tablename__="savedanime"
-    userid=Column(Integer,nullable=False)
+    id=Column(Integer,nulla)
+    userid=Column(String,nullable=False)
     animeid=Column(Integer,nullable=False)
 
 
 #User Watchhistory Table
 class Watchistory(Base):
     __tablename__="watchistory"
-    userid=Column(Integer,nullable=False)
+    userid=Column(String,nullable=False)
     animeid=Column(Integer,nullable=False)
     epid=Column(Integer,nullable=False)
     datetime=Column(DateTime,nullable=False)
+
+
+def add_user(name,email,password,role):
+    with SessionLocal() as db:
+        new_user=User(
+            name = name,
+            email= email,
+            password = password,
+            role=role
+        )
+        db.add(new_user)
+        db.commit()
+        db.refresh(new_user)
+        return new_user
