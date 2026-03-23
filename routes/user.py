@@ -1,15 +1,20 @@
-from fastapi import APIRouter
-from schemas.user_schemas import Login_schema,Signup_schema
+from fastapi import APIRouter,Request
+from controllers.user_controller import user_signup,user_login
 
 users=APIRouter(prefix="/user",tags=["users"])
 
 @users.post('/login')
-def login(data:Login_schema):
-    return {"Message":"User Login"}
+async def login(request:Request):
+    data=await request.json()
+    res=user_login(data)
+    return res
 
 @users.post('/signup')
-def signup(data:Signup_schema):
-    return {"Message":"User Signup"}
+async def signup(request:Request):
+    data= await request.json()
+    res=user_signup(data)
+    return res
+    
 
 @users.post('/saveanime/{id:int}')
 def saveanime(id):
