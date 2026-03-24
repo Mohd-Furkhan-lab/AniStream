@@ -15,7 +15,7 @@ class User(Base):
 #User Saved Anime Table
 class Savedanime(Base):
     __tablename__="savedanime"
-    id=Column(Integer,nulla)
+    id=Column(Integer,nullable=False)
     userid=Column(String,nullable=False)
     animeid=Column(Integer,nullable=False)
 
@@ -41,3 +41,16 @@ def add_user(name,email,password,role):
         db.commit()
         db.refresh(new_user)
         return new_user
+
+def is_auser(mail,password):
+    with SessionLocal() as db:
+        is_user=db.query(User.name).filter(User.email == mail).first()
+        if is_user:
+            password=db.query(User.password).filter(User.name == is_user)
+            return password
+
+def get_userid(is_authorize:bool,gmail:str):
+    with SessionLocal() as db:
+        if is_authorize():
+            user_id=db.query(User.userid).filter(User.email == gmail).first()
+            return user_id
