@@ -6,10 +6,11 @@ import datetime
 load_dotenv()
 
 
-def create_token(userid):
+def create_token(userid,role):
     secret_key = os.getenv("SECRET_KEY")
     payload = {
         "user_id" : userid,
+        "role" : role,
         "exp" : datetime.datetime.now(datetime.UTC)+datetime.timedelta(hours=1)
     }
     token = jwt.encode(payload,key=secret_key,algorithm="HS256")

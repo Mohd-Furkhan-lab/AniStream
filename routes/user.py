@@ -1,31 +1,29 @@
-from fastapi import APIRouter,Request
-from controllers.user_controller import user_signup,user_login
+from fastapi import APIRouter,Depends
+from schemas.user_schemas import Login_schema,Signup_schema,addcollection,addwatchisory
+from services.users_admin_services import login,signup,addtocollection,saveanimes,addtowatchistory,fetch_user
+from dependecies.user_dependencies import get_user_id
 
 users=APIRouter(prefix="/user",tags=["users"])
 
 @users.post('/login')
-async def login(request:Request):
-    data=await request.json()
-    res=user_login(data)
-    return res
+def user_login(data:Login_schema):
+    return login(data)
 
 @users.post('/signup')
-async def signup(request:Request):
-    data= await request.json()
-    res=user_signup(data)
-    return res
+def user_signup(data:Signup_schema):
+    return signup(data)
     
-
+#user id needs to be in auth header to get all save anime
 @users.post('/saveanime/{id:int}')
-def saveanime(id):
-    return {"Message":f"Anime {id} Saved Signup"}
+def saveanime(data:addcollection,id=Depends(get_user_id)):
+    return addtocollection(user_id=id,anime_id=id)
 
 #user id needs to be in auth header to get all save anime
 @users.get('/savedanime')
-def savedanimes():
-    return {"Message":f"Saved Anime"}
+def saved_animes(user_id=Depends(get_user_id)):
+    return saveanimes(userid=user_id)
 
-#user id needs to be in auth header to get watchistory
-@users.get('/watchistory')
-def watchistory():
-    return {"Message":"Anime Watchistory"}
+#user id needs to be in auth header to add watchistory
+@users.post('/watchistory')
+def watchistory(data:addwatchisory,user_id = Depends(get_user_id)):
+    return addtowatchistory(userid=user_id,data=data)
