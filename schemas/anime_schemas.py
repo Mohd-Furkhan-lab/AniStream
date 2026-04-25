@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-
+from typing import Optional
 
 class addanime_schemas(BaseModel):
     title : str
@@ -16,4 +16,6 @@ class addep(BaseModel):
     ep_url : str
 
 class update_anime(BaseModel):
-    status : str
+    status : Optional[str] = None
+    description : Optional[str] = None
+    image_url : Optional[str] = None

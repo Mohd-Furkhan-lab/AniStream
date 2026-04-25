@@ -1,6 +1,4 @@
-from models.anime_model import get_anime,get_anime_ep,add_anime,update_details,add_ep,anime_list,delete_anime
-
-
+from models.anime_model import get_anime,get_anime_ep,add_anime,update_details,add_ep,anime_list,delete_anime,delete_ep
 
 #User Services
 
@@ -23,7 +21,7 @@ def get_animeep(name,epno):
 
 
 def get_animelist(isadmin):
-    if isadmin():
+    if isadmin:
         res = anime_list()
         return {'message' : res}
 
@@ -59,8 +57,10 @@ def addanimeep(data,isadmin):
 def updateanime(data,isadmin,animeid):
     if isadmin:
         status = data.status
+        description = data.description
+        image_url = data.image_url
         try : 
-            res = update_details(animeid,status)
+            res = update_details(animeid,status,image_url,description)
             return {'message' : 'details updated successfully'}
         except Exception as e:
             return {'error' : f'an error occured {e}'}
@@ -73,3 +73,10 @@ def deleteanime(isadmin,animeid):
         except Exception as e:
             return {'error' : f'an error occred {e}'}
         
+def deleteep(is_admin,animeid,data):
+    if is_admin:
+        epno = data.epno
+        try:
+            res=delete_ep(animeid,epno)
+        except Exception as e:
+            return {'error' : f'an error occured {e}'}

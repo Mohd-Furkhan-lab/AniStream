@@ -37,8 +37,8 @@ class Genre(Base):
 
 def total_episodes(id):
     with SessionLocal() as db:
-        count = db.query(func.count(Episodes.epno)).filter(Anime.id == id).scalar()
-        db.query(Anime).filter(Anime.id == id).update({"total_episodes":count})
+        count = db.query(func.count(Episodes.id)).filter(Episodes.anime_id == id).scalar()
+        db.query(Anime).filter(Anime.id == id).update({"total_ep": count})
         db.commit()
 
 
@@ -75,10 +75,15 @@ def add_ep(animeid,epno,arc,ep_url):
         db.commit()
         total_episodes(animeid)
 
-def update_details(animeid,status):
+def update_details(animeid,status,image_url,description):
     with SessionLocal() as db:
         anime = db.query(Anime).filter(Anime.id == animeid).first()
-        anime.status = status
+        if status:
+            anime.status = status
+        if image_url is not None:
+            anime.image_url = image_url
+        if description is not None:
+            anime.description = description
         db.commit()
     
 def delete_anime(animeid):
@@ -88,6 +93,14 @@ def delete_anime(animeid):
         db.delete(anime)
         db.delete(episodes)
         db.commit()
+
+
+def delete_ep(animeid,epno):
+    with SessionLocal() as db:
+        episode = db.query(Episodes).filter(Episodes.anime_id == animeid,Episodes.epno == epno).first()
+        db.delete(episode)
+        db.commit()
+
 
 #Users Fucntions
 

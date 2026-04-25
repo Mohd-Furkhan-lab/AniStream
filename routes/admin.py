@@ -1,5 +1,5 @@
 from fastapi import APIRouter,Depends,UploadFile,File
-from services.anime_servcies import addanime,addanimeep,updateanime,deleteanime
+from services.anime_servcies import addanime,addanimeep,updateanime,deleteanime,get_animelist
 from dependecies.user_dependencies import is_admin
 from schemas.anime_schemas import addanime_schemas,addep,update_anime
 from cloudinary import uploader
@@ -28,3 +28,6 @@ def update_anime_info(animeid:int,data:update_anime,is_admin = Depends(is_admin)
 def delete_anime(id:int,is_admin = Depends(is_admin)):
     return deleteanime(is_admin,id)
 
+@admin.get('/anime')
+def getallanimes(is_admin = Depends(is_admin)):
+    return get_animelist(is_admin)
