@@ -1,1 +1,5 @@
 .venv/
+.env
+fix.py
+design.tldr
+/__pycache__
