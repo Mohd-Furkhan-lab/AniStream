@@ -1,0 +1,215 @@
+.watch-page {
+  min-height: 100vh;
+  background: #0a0a14;
+  padding-top: 64px;
+}
+
+.watch-header {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.back-btn {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: #c4b5fd;
+  padding: 0.45rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.back-btn:hover {
+  background: rgba(124, 58, 237, 0.2);
+}
+
+.watch-title-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.watch-anime-name {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #fff;
+}
+
+.watch-ep-label {
+  font-size: 0.82rem;
+  color: #a78bfa;
+}
+
+.watch-layout {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 0;
+  min-height: calc(100vh - 120px);
+}
+
+.player-section {
+  padding: 1.5rem 2rem;
+  border-right: 1px solid rgba(255,255,255,0.05);
+}
+
+.video-wrapper {
+  background: #000;
+  border-radius: 14px;
+  overflow: hidden;
+  aspect-ratio: 16/9;
+  border: 1px solid rgba(139,92,246,0.2);
+}
+
+.video-wrapper video {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.player-no-url {
+  width: 100%;
+  aspect-ratio: 16/9;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.03);
+  border-radius: 14px;
+  border: 1px dashed rgba(139,92,246,0.3);
+  color: #6b7280;
+}
+
+.player-no-url span { font-size: 3rem; margin-bottom: 0.5rem; }
+
+.player-skeleton {
+  aspect-ratio: 16/9;
+  border-radius: 14px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.04) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.04) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.player-error {
+  aspect-ratio: 16/9;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #6b7280;
+}
+
+.player-error span { font-size: 3rem; margin-bottom: 0.5rem; }
+
+.ep-nav-btns {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1.2rem;
+  gap: 1rem;
+}
+
+.ep-nav-btns button {
+  background: rgba(124, 58, 237, 0.15);
+  border: 1px solid rgba(139, 92, 246, 0.35);
+  color: #c4b5fd;
+  padding: 0.6rem 1.4rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.ep-nav-btns button:hover:not(:disabled) {
+  background: rgba(124, 58, 237, 0.3);
+}
+
+.ep-nav-btns button:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.ep-nav-btns span {
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+/* Sidebar */
+.ep-sidebar {
+  background: rgba(255,255,255,0.02);
+  padding: 1.5rem 1rem;
+  overflow-y: auto;
+  max-height: calc(100vh - 120px);
+}
+
+.ep-sidebar h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #e2e8f0;
+  margin: 0 0 1rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.ep-sidebar-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.ep-sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.7rem 0.85rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 1px solid transparent;
+}
+
+.ep-sidebar-item:hover {
+  background: rgba(124, 58, 237, 0.1);
+  border-color: rgba(139, 92, 246, 0.2);
+}
+
+.ep-sidebar-item.active {
+  background: rgba(124, 58, 237, 0.2);
+  border-color: rgba(139, 92, 246, 0.45);
+}
+
+.ep-s-num {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #a78bfa;
+  white-space: nowrap;
+}
+
+.ep-s-arc {
+  font-size: 0.82rem;
+  color: #9ca3af;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 768px) {
+  .watch-layout {
+    grid-template-columns: 1fr;
+  }
+  .ep-sidebar {
+    max-height: 300px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+}

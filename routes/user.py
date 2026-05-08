@@ -23,7 +23,12 @@ def saveanime(data:addcollection,id=Depends(get_user_id)):
 def saved_animes(user_id=Depends(get_user_id)):
     return saveanimes(userid=user_id)
 
+
+
 #user id needs to be in auth header to add watchistory
 @users.post('/watchistory')
 def watchistory(data:addwatchisory,user_id = Depends(get_user_id)):
     return addtowatchistory(userid=user_id,data=data)
+
+
+

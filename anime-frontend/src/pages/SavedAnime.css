@@ -1,0 +1,164 @@
+.saved-page {
+  min-height: 100vh;
+  background: #0a0a14;
+  padding-top: 64px;
+}
+
+.saved-header {
+  background: linear-gradient(135deg, #1a0533 0%, #0d0d1a 60%, #1a0520 100%);
+  border-bottom: 1px solid rgba(139, 92, 246, 0.15);
+  padding: 3rem 2rem;
+  text-align: center;
+  position: relative;
+}
+
+.saved-header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(124, 58, 237, 0.2) 0%, transparent 70%);
+}
+
+.saved-header h1 {
+  position: relative;
+  font-size: 2rem;
+  font-weight: 900;
+  color: #fff;
+  margin: 0 0 0.4rem;
+}
+
+.saved-header p {
+  position: relative;
+  color: #8b8fa8;
+  font-size: 1rem;
+  margin: 0;
+}
+
+.saved-content {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.saved-loading {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.saved-error {
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #fca5a5;
+  padding: 1rem 1.5rem;
+  border-radius: 10px;
+}
+
+.saved-empty {
+  text-align: center;
+  padding: 5rem 2rem;
+  color: #6b7280;
+}
+
+.saved-empty span {
+  font-size: 4rem;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.saved-empty h2 {
+  color: #e2e8f0;
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+}
+
+.saved-empty p {
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+}
+
+.saved-empty button {
+  background: linear-gradient(135deg, #7c3aed, #db2777);
+  border: none;
+  color: #fff;
+  padding: 0.75rem 2rem;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.saved-empty button:hover {
+  opacity: 0.88;
+}
+
+.saved-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.saved-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  border-radius: 12px;
+  padding: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.2s;
+}
+
+.saved-card:hover {
+  border-color: rgba(139, 92, 246, 0.5);
+  background: rgba(124, 58, 237, 0.08);
+}
+
+.saved-card-id {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.saved-anime-label {
+  font-size: 0.75rem;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.saved-anime-id {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #a78bfa;
+}
+
+.saved-view-btn {
+  background: rgba(124, 58, 237, 0.15);
+  border: 1px solid rgba(139, 92, 246, 0.35);
+  color: #c4b5fd;
+  padding: 0.5rem 1.2rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.saved-view-btn:hover {
+  background: rgba(124, 58, 237, 0.3);
+}
+
+.skeleton-card {
+  height: 80px;
+  border-radius: 12px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.04) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.04) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
