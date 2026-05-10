@@ -14,7 +14,7 @@ const AdminManageEpisodes = ({ animeId, onBack }) => {
     setLoading(true);
     try {
       await API.post('/admin/anime/episode', {
-        anime_id: animeId,
+        animeid: animeId,
         ...form
       });
       alert('Episode added successfully!');

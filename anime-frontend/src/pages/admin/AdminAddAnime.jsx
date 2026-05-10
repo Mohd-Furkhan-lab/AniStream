@@ -6,7 +6,7 @@ const AdminAddAnime = ({ onSuccess }) => {
     title: '',
     description: '',
     status: 'Ongoing',
-    total_episodes: 0,
+    total_ep: 0,
     release_year: new Date().getFullYear().toString(),
   });
   const [imageFile, setImageFile] = useState(null);

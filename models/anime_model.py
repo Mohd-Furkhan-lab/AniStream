@@ -35,10 +35,11 @@ class Genre(Base):
 
 #Total Episodes
 
-def total_episodes(id):
+def total_episodes(anime_id):
     with SessionLocal() as db:
-        count = db.query(func.count(Episodes.id)).filter(Episodes.anime_id == id).scalar()
-        db.query(Anime).filter(Anime.id == id).update({"total_ep": count})
+        count = db.query(func.count(Episodes.id)).filter(Episodes.anime_id == anime_id).scalar()
+        anime = db.query(Anime).filter(Anime.id == anime_id).first()
+        anime.total_episodes = count
         db.commit()
 
 
@@ -86,12 +87,13 @@ def update_details(animeid,status,image_url,description):
             anime.description = description
         db.commit()
     
-def delete_anime(animeid):
+def delete_anime_fromdb(animeid):
     with SessionLocal() as db:
-        anime = db.query(Anime).filter(Anime.id == animeid).first()
         episodes = db.query(Episodes).filter(Episodes.anime_id == animeid).all()
+        for ep in episodes:
+            db.delete(ep)
+        anime = db.query(Anime).filter(Anime.id == animeid).first()
         db.delete(anime)
-        db.delete(episodes)
         db.commit()
 
 
@@ -117,9 +119,24 @@ def get_anime(genre,name):
 
 def get_anime_ep(name,epno):
     with SessionLocal() as db:
-        animeid = db.query(Anime.id).filter(Anime.title == name)
+        animeid = db.query(Anime.id).filter(Anime.title == name).scalar_subquery()
         if epno:
             episode = db.query(Episodes).filter(Episodes.anime_id == animeid,Episodes.epno == epno).first()
             return episode    
         episodes = db.query(Episodes).filter(Episodes.anime_id == animeid).all()
         return episodes
+    
+def get_anime_by_name_or_id(name=None,id=None):
+    with SessionLocal() as db:
+        if name is not None and id is None:
+            anime = db.query(Anime).filter(Anime.title == name).first()
+            return anime
+        elif name is  None and id is not None:
+            anime = db.query(Anime).filter(Anime.id == id).first()
+            return anime
+
+def is_ep_exists(animeid,epno):
+    with SessionLocal() as db:
+        ep = db.query(Episodes).filter(Episodes.anime_id == animeid,Episodes.epno == epno).first()
+        return ep
+
