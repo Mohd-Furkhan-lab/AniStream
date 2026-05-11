@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
-
+from core import config
 from routes.user import users
 from routes.admin import admin
 from routes.anime import anime
