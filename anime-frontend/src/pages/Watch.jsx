@@ -12,13 +12,17 @@ const Watch = () => {
   const currentEp = parseInt(epno);
 
   useEffect(() => {
+    const encodedName = encodeURIComponent(name);
+
     const fetchEp = async () => {
       setLoading(true);
       try {
-        const res = await API.get(`/anime/${name}/episodes/${epno}`);
+        const res = await API.get(`/anime/${encodedName}/episodes/${epno}`);
         setEpisode(res.data.message);
         // log watch history
-        await API.post('/user/watchistory', { anime_id: name, ep_id: epno }).catch(() => {});
+        if (res.data.message && res.data.message.anime_id) {
+          await API.post('/user/watchistory', { anime_id: res.data.message.anime_id, ep_id: epno }).catch(() => {});
+        }
       } catch {
         setEpisode(null);
       } finally {
@@ -28,7 +32,7 @@ const Watch = () => {
 
     const fetchAllEps = async () => {
       try {
-        const res = await API.get(`/anime/${name}/episodes`);
+        const res = await API.get(`/anime/${encodedName}/episodes`);
         const data = res.data.message;
         setAllEps(Array.isArray(data) ? data : data ? [data] : []);
       } catch {

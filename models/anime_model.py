@@ -104,6 +104,17 @@ def delete_ep(animeid,epno):
         db.commit()
 
 
+def add_anime_togenre(anime_id,genre):
+    with SessionLocal() as db:
+        genre = Genre(
+            anime_id = anime_id,
+            genre = genre
+        )
+        db.add(genre)
+        db.commit()
+        return True
+
+
 #Users Fucntions
 
 def get_anime(genre,name):
@@ -139,4 +150,5 @@ def is_ep_exists(animeid,epno):
     with SessionLocal() as db:
         ep = db.query(Episodes).filter(Episodes.anime_id == animeid,Episodes.epno == epno).first()
         return ep
+
 

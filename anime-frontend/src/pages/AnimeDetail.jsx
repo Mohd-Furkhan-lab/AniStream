@@ -13,9 +13,11 @@ const AnimeDetail = () => {
   const [saved, setSaved] = useState(false);
 
   useEffect(() => {
+    const encodedName = encodeURIComponent(name);
+
     const fetchAnime = async () => {
       try {
-        const res = await API.get(`/anime/${name}`);
+        const res = await API.get(`/anime/${encodedName}`);
         setAnime(res.data.message);
       } catch {
         setAnime(null);
@@ -26,7 +28,7 @@ const AnimeDetail = () => {
 
     const fetchEpisodes = async () => {
       try {
-        const res = await API.get(`/anime/${name}/episodes`);
+        const res = await API.get(`/anime/${encodedName}/episodes`);
         const data = res.data.message;
         setEpisodes(Array.isArray(data) ? data : data ? [data] : []);
       } catch {
@@ -53,7 +55,10 @@ const AnimeDetail = () => {
       <div className="detail-page">
         <div className="detail-not-found">
           <span>😕</span>
-          <p>Anime not found.</p>
+          <p>Could not load <strong>"{name}"</strong></p>
+          <p style={{ fontSize: '0.85rem', color: '#666', marginTop: '0.4rem' }}>
+            The anime may not exist or there was a connection issue.
+          </p>
           <button onClick={() => navigate('/home')}>Go Back</button>
         </div>
       </div>
@@ -114,7 +119,11 @@ const AnimeDetail = () => {
         <h2>Episodes</h2>
         {epLoading && <div className="ep-loading">Loading episodes...</div>}
         {!epLoading && episodes.length === 0 && (
-          <p className="ep-empty">No episodes available yet.</p>
+          <div className="ep-empty">
+            <span>📭</span>
+            <p>No episodes available yet.</p>
+            <small>Episodes will appear here once they are uploaded.</small>
+          </div>
         )}
         <div className="episodes-grid">
           {episodes.map((ep) => (

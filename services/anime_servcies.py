@@ -1,5 +1,6 @@
-from models.anime_model import get_anime,get_anime_ep,add_anime,update_details,add_ep,anime_list,delete_anime_fromdb,delete_ep,get_anime_by_name_or_id,is_ep_exists
+from models.anime_model import get_anime,get_anime_ep,add_anime,update_details,add_ep,anime_list,delete_anime_fromdb,delete_ep,get_anime_by_name_or_id,is_ep_exists,add_anime_togenre
 from fastapi import HTTPException
+from schemas.anime_schemas import addgenre
 #User Services
 
 def get_anime_for_user(genre = None,name = None):
@@ -34,7 +35,7 @@ def get_animelist(isadmin):
 
 def addanime(data,isadmin):
     if isadmin:
-        title = data.title
+        title = data.title.strip() if data.title else data.title
         image_url = data.image_url
         description = data.description
         status = data.status
@@ -64,6 +65,20 @@ def addanimeep(data,isadmin):
             res = add_ep(id,epno,arc,ep_url)
             return {'message' : 'ep added successfully'}
 
+
+def addanime_togenre(data:addgenre,is_admin):
+    if is_admin:
+        id = data.animeid
+        genre = data.genre
+        is_exists=get_anime_by_name_or_id(id=id)
+        if is_exists is None:
+            raise HTTPException(404,detail="Anime Not Found")
+        else:
+            add_anime_togenre(id,genre)
+            return {"message" : "Anime added to genre successfully"}
+
+
+
 def updateanime(data,isadmin,animeid):
     if isadmin:
         status = data.status
@@ -89,12 +104,13 @@ def deleteanime(isadmin,animeid):
             res = delete_anime_fromdb(animeid)
             return {'message' : 'anime deleted Successfully'}
         
-def deleteep(is_admin,animeid,data):
+def deleteep(is_admin,animeid,epno):
     if is_admin:
-        is_exists = is_ep_exists(id,epno)
-        if is_exists :
-            raise HTTPException(409,detail="Episode Already Exists")
+        is_exists = is_ep_exists(animeid,epno)
+        if is_exists is None :
+            raise HTTPException(409,detail="Episode Doesnt Exists")
         else:
-            epno = data.epno
             res=delete_ep(animeid,epno)
             return {'message': 'ep deleted successfully'}
+
+

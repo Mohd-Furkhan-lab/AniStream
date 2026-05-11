@@ -1,14 +1,14 @@
 from fastapi import APIRouter,Depends,UploadFile,File
-from services.anime_servcies import addanime,addanimeep,updateanime,deleteanime,get_animelist
+from services.anime_servcies import addanime,addanimeep,updateanime,deleteanime,get_animelist,addanime_togenre,deleteep
 from dependecies.user_dependencies import is_admin
-from schemas.anime_schemas import addanime_schemas,addep,update_anime
+from schemas.anime_schemas import addanime_schemas,addep,update_anime,addgenre
 from cloudinary import uploader
 
 admin=APIRouter(prefix="/admin",tags=["admin"])
 
 
 @admin.post('/upload')
-async def upload_img(file : UploadFile = File(...)):
+async def upload_file(file : UploadFile = File(...)):
     result = uploader.upload(file.file,resource_type="auto")
     return {'url' : result['secure_url']}
 
@@ -31,3 +31,12 @@ def delete_anime(id:int,is_admin = Depends(is_admin)):
 @admin.get('/anime')
 def getallanimes(is_admin = Depends(is_admin)):
     return get_animelist(is_admin)
+
+@admin.post('/anime/genre')
+def addtogenre(data:addgenre,is_admin = Depends(is_admin)):
+    return addanime_togenre(data,is_admin)
+
+
+@admin.delete('/anime/{animeid}/episode/{epno}')
+def delete_anime_ep(animeid,epno,is_admin=Depends(is_admin)):
+    return deleteep(is_admin,animeid,epno)

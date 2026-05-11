@@ -10,54 +10,183 @@
   padding: 3rem 2rem;
   text-align: center;
   position: relative;
-}
-
-.saved-header::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse at 50% 0%, rgba(124, 58, 237, 0.2) 0%, transparent 70%);
+  text-align: center;
+  padding: 2rem 0 2.5rem;
 }
 
 .saved-header h1 {
-  position: relative;
   font-size: 2rem;
-  font-weight: 900;
+  font-weight: 700;
   color: #fff;
-  margin: 0 0 0.4rem;
+  margin-bottom: 0.4rem;
 }
 
 .saved-header p {
-  position: relative;
-  color: #8b8fa8;
+  color: #888;
   font-size: 1rem;
-  margin: 0;
 }
 
 .saved-content {
-  padding: 2rem;
   max-width: 1200px;
   margin: 0 auto;
 }
 
-.saved-loading {
+/* Grid — same rhythm as Home page */
+.saved-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.5rem;
 }
 
-.saved-error {
-  background: rgba(239, 68, 68, 0.12);
-  border: 1px solid rgba(239, 68, 68, 0.3);
-  color: #fca5a5;
-  padding: 1rem 1.5rem;
-  border-radius: 10px;
+/* Card */
+.saved-card {
+  background: #13131a;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.07);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.saved-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(139, 92, 246, 0.2);
+}
+
+/* Image wrapper */
+.saved-card-img-wrap {
+  position: relative;
+  aspect-ratio: 2/3;
+  overflow: hidden;
+  background: #1a1a2e;
+}
+
+.saved-card-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.saved-card:hover .saved-card-img-wrap img {
+  transform: scale(1.05);
+}
+
+.saved-card-img-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  color: #444;
+}
+
+.saved-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.saved-card:hover .saved-card-overlay {
+  opacity: 1;
+}
+
+.saved-play-btn {
+  width: 52px;
+  height: 52px;
+  background: rgba(139, 92, 246, 0.9);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  color: #fff;
+}
+
+/* Status badge */
+.saved-status-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+}
+
+.saved-status-badge.ongoing  { background: rgba(16,185,129,0.85); }
+.saved-status-badge.completed { background: rgba(139,92,246,0.85); }
+.saved-status-badge.upcoming  { background: rgba(245,158,11,0.85); }
+
+/* Info */
+.saved-card-info {
+  padding: 0.85rem 1rem;
+}
+
+.saved-card-info h3 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #fff;
+  margin: 0 0 0.4rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.saved-card-meta {
+  display: flex;
+  gap: 0.75rem;
+  font-size: 0.75rem;
+  color: #888;
+  margin-bottom: 0.4rem;
+}
+
+.saved-card-desc {
+  font-size: 0.78rem;
+  color: #666;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin: 0;
+}
+
+/* States */
+.saved-loading {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.skeleton-card {
+  aspect-ratio: 2/3;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #1a1a2e 25%, #22223b 50%, #1a1a2e 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }
 
 .saved-empty {
   text-align: center;
-  padding: 5rem 2rem;
-  color: #6b7280;
+  padding: 4rem 1rem;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 12px;
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+  margin-top: 2rem;
 }
 
 .saved-empty span {
@@ -67,98 +196,28 @@
 }
 
 .saved-empty h2 {
-  color: #e2e8f0;
-  font-size: 1.4rem;
+  color: #fff;
+  font-size: 1.5rem;
   margin-bottom: 0.5rem;
 }
 
 .saved-empty p {
-  margin-bottom: 1.5rem;
-  font-size: 0.95rem;
+  color: #888;
+  margin-bottom: 2rem;
 }
 
 .saved-empty button {
-  background: linear-gradient(135deg, #7c3aed, #db2777);
-  border: none;
+  background: #8b5cf6;
   color: #fff;
-  padding: 0.75rem 2rem;
-  border-radius: 10px;
+  border: none;
+  padding: 0.8rem 2rem;
+  border-radius: 8px;
   font-size: 1rem;
-  font-weight: 700;
+  font-weight: 600;
   cursor: pointer;
-  transition: opacity 0.2s;
+  transition: background 0.2s;
 }
 
 .saved-empty button:hover {
-  opacity: 0.88;
-}
-
-.saved-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1rem;
-}
-
-.saved-card {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(139, 92, 246, 0.2);
-  border-radius: 12px;
-  padding: 1.2rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  transition: all 0.2s;
-}
-
-.saved-card:hover {
-  border-color: rgba(139, 92, 246, 0.5);
-  background: rgba(124, 58, 237, 0.08);
-}
-
-.saved-card-id {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-}
-
-.saved-anime-label {
-  font-size: 0.75rem;
-  color: #6b7280;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.saved-anime-id {
-  font-size: 1.3rem;
-  font-weight: 800;
-  color: #a78bfa;
-}
-
-.saved-view-btn {
-  background: rgba(124, 58, 237, 0.15);
-  border: 1px solid rgba(139, 92, 246, 0.35);
-  color: #c4b5fd;
-  padding: 0.5rem 1.2rem;
-  border-radius: 8px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.saved-view-btn:hover {
-  background: rgba(124, 58, 237, 0.3);
-}
-
-.skeleton-card {
-  height: 80px;
-  border-radius: 12px;
-  background: linear-gradient(90deg, rgba(255,255,255,0.04) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.04) 75%);
-  background-size: 200% 100%;
-  animation: shimmer 1.4s infinite;
-}
-
-@keyframes shimmer {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
+  background: #7c3aed;
 }

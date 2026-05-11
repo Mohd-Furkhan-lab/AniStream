@@ -62,7 +62,7 @@ const AdminAddAnime = ({ onSuccess }) => {
         <div className="admin-form-group" style={{ display: 'flex', gap: '1rem' }}>
           <div style={{ flex: 1 }}>
             <label>Total Episodes</label>
-            <input required type="number" min="0" value={form.total_episodes} onChange={e => setForm({...form, total_episodes: parseInt(e.target.value)})} />
+            <input required type="number" min="0" value={form.total_ep} onChange={e => setForm({...form, total_ep: parseInt(e.target.value)})} />
           </div>
           <div style={{ flex: 1 }}>
             <label>Release Year</label>

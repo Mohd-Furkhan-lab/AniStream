@@ -1,5 +1,5 @@
 from fastapi import HTTPException
-from models.users_model import add_user,is_user,get_token_payload_data,saved_animes,savea_anime,add_watchhistory,get_all_users
+from models.users_model import add_user,is_user,get_token_payload_data,saved_animes,savea_anime,add_watchhistory,get_all_users,is_user_exist,watchistory_of_auser
 from auth.Jwttoken import create_token
 import bcrypt
 import uuid
@@ -27,13 +27,13 @@ def signup(data):
     name = data.name
     email = data.email
     password = data.password
-    try:
+    is_exist = is_user_exist(email)
+    if is_exist:
+        raise HTTPException(409,detail="User Already Exists")
+    else:
         hash_password = bcrypt.hashpw(password.encode(),bcrypt.gensalt())
         res = add_user(name,email,hash_password)
-        if res:
-            return {'message' : 'user added successfully'}
-    except HTTPException:
-        raise HTTPException(500,detail="an error occured cant create user")
+        return {'message' : 'user added successfully'}
 
 
 def saveanimes(userid):
@@ -58,8 +58,14 @@ def addtowatchistory(userid,data):
     except HTTPException:
         raise HTTPException(500,detail= "an error occured cant updat watchistory")
 
+def fetch_watchistory(userid):
+    history = watchistory_of_auser(userid)
+    return history    
+
 #Admin Services
 def fetch_user(role):
     if role == "admin":
         return get_all_users()
     raise HTTPException(401,detail="unauthorized access")
+
+

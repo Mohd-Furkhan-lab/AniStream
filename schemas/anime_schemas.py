@@ -19,3 +19,9 @@ class update_anime(BaseModel):
     status : Optional[str] = None
     description : Optional[str] = None
     image_url : Optional[str] = None
+
+
+class addgenre(BaseModel):
+    animeid : str
+    genre : str
+

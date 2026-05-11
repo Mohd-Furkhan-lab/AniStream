@@ -242,10 +242,36 @@
   opacity: 1;
 }
 
-.ep-loading, .ep-empty {
+.ep-loading {
   color: #6b7280;
   font-size: 0.95rem;
   padding: 1rem 0;
+}
+
+.ep-empty {
+  text-align: center;
+  padding: 2.5rem 1rem;
+  color: #555;
+  background: rgba(255,255,255,0.02);
+  border: 1px dashed rgba(255,255,255,0.08);
+  border-radius: 12px;
+}
+
+.ep-empty span {
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: 0.6rem;
+}
+
+.ep-empty p {
+  color: #888;
+  font-size: 0.95rem;
+  margin: 0 0 0.3rem;
+}
+
+.ep-empty small {
+  color: #555;
+  font-size: 0.8rem;
 }
 
 .detail-skeleton {

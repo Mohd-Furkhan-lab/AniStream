@@ -24,6 +24,7 @@ const Navbar = () => {
           <>
             <Link to="/home" className="nav-link">Browse</Link>
             <Link to="/saved" className="nav-link">My List</Link>
+            <Link to="/history" className="nav-link">History</Link>
             {user.role === 'admin' && (
               <Link to="/admin" className="nav-link admin-link">Admin Dashboard</Link>
             )}

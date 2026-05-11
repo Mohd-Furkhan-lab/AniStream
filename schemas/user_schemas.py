@@ -12,10 +12,8 @@ class Login_schema(BaseModel):
     password : str
     email : str
 
-class addcollection(BaseModel):
-    anime_id : int
 
 
 class addwatchisory(BaseModel):
-    anime_id : str
-    ep_id : str
+    anime_id : int
+    ep_id : int

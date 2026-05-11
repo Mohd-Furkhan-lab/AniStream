@@ -5,23 +5,24 @@ import './SavedAnime.css';
 
 const SavedAnime = () => {
   const [savedList, setSavedList] = useState([]);
+  const [animeMap, setAnimeMap] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchSaved = async () => {
+    const fetchData = async () => {
       try {
         const res = await API.get('/user/savedanime');
-        const data = res.data.message;
-        setSavedList(Array.isArray(data) ? data : data ? [data] : []);
+        const saved = res.data.message;
+        setSavedList(Array.isArray(saved) ? saved : saved ? [saved] : []);
       } catch (err) {
         setError('Failed to load your saved anime.');
       } finally {
         setLoading(false);
       }
     };
-    fetchSaved();
+    fetchData();
   }, []);
 
   return (
@@ -51,19 +52,41 @@ const SavedAnime = () => {
 
         {!loading && !error && savedList.length > 0 && (
           <div className="saved-grid">
-            {savedList.map((item) => (
-              <div key={item.saveid} className="saved-card">
-                <div className="saved-card-id">
-                  <span className="saved-anime-label">Anime ID</span>
-                  <span className="saved-anime-id">{item.animeid}</span>
+            {savedList.map((anime) => {
+              return (
+                <div
+                  key={anime.id}
+                  className="saved-card"
+                  onClick={() => navigate(`/anime/${anime.title}`)}
+                  style={{ cursor: 'pointer' }}
+                >
+                  <div className="saved-card-img-wrap">
+                    {anime.image_url
+                      ? <img src={anime.image_url} alt={anime.title} />
+                      : <div className="saved-card-img-placeholder">🎬</div>
+                    }
+                    <div className="saved-card-overlay">
+                      <span className="saved-play-btn">▶</span>
+                    </div>
+                    {anime.status && (
+                      <span className={`saved-status-badge ${anime.status.toLowerCase()}`}>
+                        {anime.status}
+                      </span>
+                    )}
+                  </div>
+                  <div className="saved-card-info">
+                    <h3>{anime.title}</h3>
+                    <div className="saved-card-meta">
+                      <span>📅 {anime.release_year}</span>
+                      <span>🎬 {anime.total_episodes} eps</span>
+                    </div>
+                    {anime.description && (
+                      <p className="saved-card-desc">{anime.description}</p>
+                    )}
+                  </div>
                 </div>
-                <div className="saved-card-actions">
-                  <button className="saved-view-btn" onClick={() => navigate('/home')}>
-                    Find Anime
-                  </button>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
       </div>

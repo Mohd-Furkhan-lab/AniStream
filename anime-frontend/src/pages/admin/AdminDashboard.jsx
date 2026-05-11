@@ -2,19 +2,27 @@ import { useState } from 'react';
 import AdminManageAnime from './AdminManageAnime';
 import AdminAddAnime from './AdminAddAnime';
 import AdminManageEpisodes from './AdminManageEpisodes';
+import AdminEditAnime from './AdminEditAnime';
 import './AdminDashboard.css';
 
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState('manage');
   const [selectedAnimeId, setSelectedAnimeId] = useState(null);
+  const [selectedAnimeName, setSelectedAnimeName] = useState('');
+  const [selectedAnime, setSelectedAnime] = useState(null); // full object for edit
 
   const renderContent = () => {
     if (activeTab === 'manage') {
       return (
         <AdminManageAnime
-          onManageEpisodes={(animeId) => {
+          onManageEpisodes={(animeId, animeName) => {
             setSelectedAnimeId(animeId);
+            setSelectedAnimeName(animeName);
             setActiveTab('episodes');
+          }}
+          onEditAnime={(anime) => {
+            setSelectedAnime(anime);
+            setActiveTab('edit');
           }}
         />
       );
@@ -26,6 +34,16 @@ const AdminDashboard = () => {
       return (
         <AdminManageEpisodes
           animeId={selectedAnimeId}
+          animeName={selectedAnimeName}
+          onBack={() => setActiveTab('manage')}
+        />
+      );
+    }
+    if (activeTab === 'edit') {
+      return (
+        <AdminEditAnime
+          anime={selectedAnime}
+          onSuccess={() => setActiveTab('manage')}
           onBack={() => setActiveTab('manage')}
         />
       );
@@ -40,7 +58,7 @@ const AdminDashboard = () => {
         </div>
         <nav className="admin-nav">
           <button
-            className={`admin-nav-btn ${activeTab === 'manage' || activeTab === 'episodes' ? 'active' : ''}`}
+            className={`admin-nav-btn ${activeTab === 'manage' || activeTab === 'episodes' || activeTab === 'edit' ? 'active' : ''}`}
             onClick={() => setActiveTab('manage')}
           >
             Manage Anime
@@ -61,3 +79,4 @@ const AdminDashboard = () => {
 };
 
 export default AdminDashboard;
+
