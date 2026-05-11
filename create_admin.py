@@ -31,7 +31,7 @@ def create_admin():
         hash_password = bcrypt.hashpw(
             admin_password.encode(),
             bcrypt.gensalt()
-        )
+        ).decode()
 
         admin = User(
             name=admin_name,
