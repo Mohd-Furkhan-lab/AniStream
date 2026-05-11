@@ -10,6 +10,8 @@ def login(data):
     email = data.email
     password = data.password 
     stored_password = is_user(email,name)
+    print(stored_password)
+    print(type(stored_password))
     if not stored_password:
             raise HTTPException(401,detail="invalid crednetials")
     res=bcrypt.checkpw(password.encode(),stored_password.encode())
