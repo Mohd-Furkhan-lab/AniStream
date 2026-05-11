@@ -25,6 +25,13 @@ const Login = () => {
       // Backend returns: { message: "token : eyJ..." }
       const rawMessage = res.data.message;
       const token = rawMessage.replace('token : ', '').trim();
+
+      // Validate it looks like a real JWT (3 dot-separated parts)
+      if (!token || token.split('.').length !== 3) {
+        setError('Login failed: unexpected server response. Please try again.');
+        return;
+      }
+
       login(token);
       navigate('/home');
     } catch (err) {

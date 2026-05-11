@@ -12,7 +12,7 @@ def login(data):
     stored_password = is_user(email,name)
     if not stored_password:
             raise HTTPException(401,detail="invalid crednetials")
-    res=bcrypt.checkpw(password.encode(),stored_password)
+    res=bcrypt.checkpw(password.encode(),stored_password.encode())
     if not  res:
         raise HTTPException(401,detail="invalid crednetials")
     data = get_token_payload_data(res,email)
