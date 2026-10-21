@@ -231,10 +231,6 @@ The application uses PostgreSQL. Tables are automatically created on startup:
 4. Push to branch (`git push origin feature/AmazingFeature`)
 5. Open Pull Request
 
-## 📄 License
-
-This project is licensed under the MIT License - see LICENSE file for details.
-
 ## 🆘 Support
 
 For issues and questions, please open an issue in the repository.
